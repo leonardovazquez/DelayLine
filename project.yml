@@ -1,0 +1,12 @@
+title: 500Mhz Quadrature Delay Locked Loop
+authors:
+- Leonardo Vazquez
+- Martin Doric
+- Clemente Molinari
+- Santiago Basignana
+- Matias Schulthess
+- Mateo Buteler
+type: Analog
+tapeout_target: true
+description: ''
+status_text: Proposed
