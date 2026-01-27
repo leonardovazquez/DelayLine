@@ -1,0 +1,28 @@
+name: QDLL
+description: 100Mhz Quadrature Delay Locked Loop
+PDK: ihp-sg13g2
+cace_format: 5.0
+
+authorship:
+  designer: Leonardo Vazquez, Martin Doric, Clemente Molinari, Santiago Basignana, Matias Schulthess, Mateo Buteler
+  company: Fundacion Fulgor
+  creation_date: 2026
+  license: Apache 2.0
+
+paths:
+  root: ..
+  schematic: tops
+  layout: gds
+  netlist: netlist
+  documentation: doc
+
+pins:
+  VDD:
+    description: Power supply
+    direction: inout
+    type: power
+    Vmin: 1.7
+    Vmax: 1.9
+    Imin: 0
+    Imax: 0.01
+  VSS:
