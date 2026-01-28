@@ -190,5 +190,5 @@ value="
 .endc
 "
 spice_ignore=true}
-C {vsource.sym} -290 230 0 0 {name=V1 value=0.49 savecurrent=false
+C {vsource.sym} -290 230 0 0 {name=V1 value=0.6 savecurrent=false
 }

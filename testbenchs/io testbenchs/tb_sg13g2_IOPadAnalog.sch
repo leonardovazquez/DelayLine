@@ -5,10 +5,10 @@ V {}
 S {}
 F {}
 E {}
-N 330 -150 330 -120 {lab=out_a}
-N 300 -120 330 -120 {lab=out_a}
-N 330 -120 360 -120 {lab=out_a}
-N -100 -120 60 -120 {lab=in_a}
+N 330 -150 330 -120 {lab=#net1}
+N 300 -120 330 -120 {lab=#net1}
+N 330 -120 360 -120 {lab=#net1}
+N -100 -120 60 -120 {lab=#net2}
 N -260 -370 -260 -360 {
 lab=IO_vdd}
 N -200 -370 -200 -360 {
@@ -30,28 +30,28 @@ N 670 -190 700 -190 {lab=out_a}
 N 700 -190 700 -150 {lab=out_a}
 N 670 -220 670 -190 {lab=out_a}
 N 630 -190 670 -190 {lab=out_a}
-N -100 -130 -100 -120 {lab=in_a}
-N -130 -120 -100 -120 {lab=in_a}
+N -100 -130 -100 -120 {lab=#net2}
+N -130 -120 -100 -120 {lab=#net2}
 N -210 30 -210 50 {lab=GND}
-N -210 -120 -210 -30 {lab=in_a}
-N -210 -120 -190 -120 {lab=in_a}
-N 340 260 340 290 {lab=#net1}
-N 310 290 340 290 {lab=#net1}
-N 340 290 370 290 {lab=#net1}
-N -90 290 70 290 {lab=#net2}
+N -210 -120 -210 -30 {lab=#net2}
+N -210 -120 -190 -120 {lab=#net2}
+N 340 260 340 290 {lab=in_a}
+N 310 290 340 290 {lab=in_a}
+N 340 290 370 290 {lab=in_a}
+N -90 290 70 290 {lab=out_a}
 N 30 320 70 320 {lab=IO_iovdd}
 N 30 260 70 260 {lab=IO_vdd}
 N 30 270 70 270 {lab=IO_vss}
 N 30 310 70 310 {lab=IO_iovss}
-N -90 280 -90 290 {lab=#net2}
-N -120 290 -90 290 {lab=#net2}
+N -90 280 -90 290 {lab=out_a}
+N -120 290 -90 290 {lab=out_a}
 N 340 440 340 460 {lab=GND}
-N 340 290 340 380 {lab=#net1}
-N -230 290 -230 320 {lab=#net2}
-N -230 290 -180 290 {lab=#net2}
+N 340 290 340 380 {lab=in_a}
+N -230 290 -230 320 {lab=out_a}
+N -230 290 -180 290 {lab=out_a}
 C {gnd.sym} -210 50 0 0 {name=l7 lab=GND
 }
-C {vsource.sym} -210 0 0 0 {name=Vin value="PULSE(0 1.2 0 200p 200p 5n 10n)"
+C {vsource.sym} -210 0 0 0 {name=Vin value="PULSE(0 1.2 0 200p 200p 2n 4n)"
 }
 C {sg13g2_pr/bondpad.sym} 400 -120 1 0 {name=X16
 model=bondpad
@@ -61,7 +61,7 @@ shape=0
 padtype=0
 }
 C {lab_pin.sym} 330 -150 1 0 {name=p13 sig_type=std_logic lab=out_a
-}
+spice_ignore=true}
 C {sg13g2_IOPadAnalog.sym} 180 -120 2 1 {name=x5
 }
 C {vsource.sym} -260 -330 0 0 {name=V1 value=1.2}
@@ -121,6 +121,7 @@ C {code.sym} -550 -200 0 0 {name=TRANSIENT1 only_toplevel=true
 value="
 .options method=gear reltol=1e-1 abstol=1e-1 vntol=1e-1
 .control
+ set color0 = white
  tran 10p 20n 10p
  plot v(in_a) v(out_a)
  plot i(Vin) 
@@ -128,7 +129,7 @@ value="
 "
 }
 C {lab_pin.sym} -100 -130 1 0 {name=p5 sig_type=std_logic lab=in_a
-}
+spice_ignore=true}
 C {res.sym} -160 -120 3 0 {name=R1
 value=10
 footprint=1206
@@ -136,8 +137,6 @@ device=resistor
 m=1
 spice_ignore=short}
 C {gnd.sym} 340 460 0 0 {name=l1 lab=GND}
-C {vsource.sym} 340 410 0 0 {name=Vin1 value="PULSE(0 1.2 0 40p 40p 0.5n 1n)"
-}
 C {sg13g2_pr/bondpad.sym} 410 290 1 0 {name=X1
 model=bondpad
 spiceprefix=X
@@ -146,7 +145,7 @@ shape=0
 padtype=0
 }
 C {lab_pin.sym} -90 280 1 0 {name=p6 sig_type=std_logic lab=out_a
-spice_ignore=true}
+}
 C {sg13g2_IOPadAnalog.sym} 190 290 2 1 {name=x2
 }
 C {lab_pin.sym} 30 320 0 0 {name=p11 sig_type=std_logic lab=IO_iovdd}
@@ -154,7 +153,7 @@ C {lab_pin.sym} 30 260 0 0 {name=p12 sig_type=std_logic lab=IO_vdd}
 C {lab_pin.sym} 30 270 0 0 {name=p14 sig_type=std_logic lab=IO_vss}
 C {lab_pin.sym} 30 310 0 0 {name=p15 sig_type=std_logic lab=IO_iovss}
 C {lab_pin.sym} 340 260 1 0 {name=p16 sig_type=std_logic lab=in_a
-spice_ignore=true}
+}
 C {res.sym} -150 290 3 0 {name=R3
 value=10
 footprint=1206
@@ -170,3 +169,5 @@ device="ceramic capacitor"
 C {gnd.sym} -230 380 0 0 {name=l2 lab=GND}
 C {sg13g2_IOPadIn.sym} 70 480 0 0 {name=x3
 spice_ignore=true}
+C {vsource.sym} 340 410 0 0 {name=Vin1 value="PULSE(0 1.2 0 200p 200p 2n 4n)"
+}

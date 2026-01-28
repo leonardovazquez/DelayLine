@@ -819,7 +819,13 @@ def plot_phase_difference_full(vin1, t1, vout2, t2, threshold=0.6, freq=None, ed
     ax.set_ylabel("Δφ = φ(vout2) − φ(vin1) (°)", fontsize=12)
     ax.set_title(f"Diferencia de Fase (Full Range), thr={threshold}, f={freq/1e6:.2f} MHz, edge={edge}", fontsize=13)
     ax.grid(True, alpha=0.3)
+    ax.axhline(y=90,  color='gray', linestyle='--', linewidth=1)
+    ax.axhline(y=180, color='gray', linestyle='--', linewidth=1)
+    ax.text(x=ax.get_xlim()[1]*0.98, y=90,  s="90°",  va='bottom', ha='right', fontsize=10, color='gray')
+    ax.text(x=ax.get_xlim()[1]*0.98, y=180, s="180°", va='bottom', ha='right', fontsize=10, color='gray')
+    plt.ylim([0,360])
     fig.tight_layout()
+
     plt.show()
 
     # Print debug info

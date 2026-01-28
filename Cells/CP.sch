@@ -19,7 +19,8 @@ N 240 0 240 40 {lab=CPOUT}
 N 100 0 240 0 {lab=CPOUT}
 N 240 100 240 150 {lab=VSS}
 N 100 150 240 150 {lab=VSS}
-N -590 0 -460 0 {lab=CPIN}
+N -490 0 -460 0 {lab=#net2}
+N -750 0 -680 0 {lab=CPIN}
 C {sg13g2_pr/cap_cmim.sym} 0 70 0 0 {name=C1
 model=cap_cmim
 w=20e-6
@@ -27,17 +28,8 @@ l=20e-6
 m=1
 spiceprefix=X
 }
-C {sg13g2_pr/rppd.sym} -150 -110 3 0 {name=R2
-w=1e-6
-l=40e-6
-model=rppd
-body=sub!
-spiceprefix=X
-b=0
-m=1
-spice_ignore=true}
 C {iopin.sym} 0 170 1 0 {name=p3 lab=VSS}
-C {ipin.sym} -580 0 0 0 {name=p1 lab=CPIN}
+C {ipin.sym} -750 0 0 0 {name=p1 lab=CPIN}
 C {opin.sym} 310 0 0 0 {name=p5 lab=CPOUT}
 C {/foss/designs/DLL/2026/Cells/RES.sym} -360 0 0 0 {name=x1
 }
@@ -56,4 +48,6 @@ w=20e-6
 l=20e-6
 m=1
 spiceprefix=X
+}
+C {/foss/designs/DLL/2026/Cells/RES.sym} -580 0 0 0 {name=x3
 }

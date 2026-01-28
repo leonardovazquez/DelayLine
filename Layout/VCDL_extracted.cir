@@ -1,4 +1,4 @@
-* Extracted by KLayout with SG13G2 LVS runset on : 24/01/2026 04:34
+* Extracted by KLayout with SG13G2 LVS runset on : 28/01/2026 02:51
 
 .SUBCKT VCDL VSS VDD VCONT VIN VOUT
 M$1 VDD \$5 \$8 VDD sg13_lv_pmos L=0.13u W=2.24u AS=0.7616p AD=0.7616p PS=5.16u

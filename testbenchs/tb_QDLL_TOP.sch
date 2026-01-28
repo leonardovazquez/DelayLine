@@ -6,15 +6,15 @@ S {}
 F {}
 E {}
 B 2 830 -230 1630 170 {flags=graph
-y1=-0.014
-y2=1.3
+y1=1.5
+y2=3.5
 ypos1=0
 ypos2=2
 divy=5
 subdivy=1
 unity=1
-x1=3.4553388e-08
-x2=9.2644471e-09
+x1=1.0865e-07
+x2=1.0565e-07
 subdivx=1
 xlabmag=1.0
 ylabmag=1.0
@@ -52,8 +52,8 @@ out2"
 linewidth_mult=0.5
 divx=20
 hilight_wave=0
-x1=3.4553388e-08
-x2=9.2644471e-09}
+x1=1.0865e-07
+x2=1.0565e-07}
 N -680 370 -680 380 {
 lab=IO_vdd}
 N -740 370 -740 380 {
@@ -124,7 +124,6 @@ N -530 430 -530 440 {lab=sub!}
 N 240 140 240 250 {lab=IO_iovdd}
 N -240 240 230 240 {lab=IO_iovss}
 N -1020 80 -1020 100 {lab=GND}
-N -1020 -120 -1020 -90 {lab=inpad1}
 N -540 -50 -540 -40 {lab=IO_vdd}
 N -590 -50 -540 -50 {lab=IO_vdd}
 N -540 20 -540 30 {lab=IO_vss}
@@ -165,7 +164,6 @@ N -620 370 -620 380 {
 lab=VDD}
 N -920 370 -920 380 {
 lab=VSS}
-N -930 -120 -930 -90 {lab=inpad2}
 N -930 50 -930 100 {lab=GND}
 N -10 -220 210 -220 {lab=IO_vdd}
 N 220 90 270 90 {lab=IO_vss}
@@ -205,6 +203,9 @@ N -220 -220 -10 -220 {lab=IO_vdd}
 N -10 100 -10 230 {lab=IO_vss}
 N -230 230 -10 230 {lab=IO_vss}
 N 50 100 50 140 {lab=CP}
+N 50 100 60 100 {lab=CP}
+N -1020 -240 -1020 -90 {lab=inpad1}
+N -930 -250 -930 -90 {lab=inpad2}
 C {vsource.sym} -680 410 0 0 {name=V1 value=\{vdd\}}
 C {gnd.sym} -680 440 0 0 {name=l3 lab=GND}
 C {lab_pin.sym} -680 370 1 0 {name=p7 sig_type=std_logic lab=IO_vdd}
@@ -218,10 +219,11 @@ C {lab_pin.sym} -800 370 1 0 {name=p9 sig_type=std_logic lab=IO_vss}
 C {vsource.sym} -860 410 0 0 {name=V4 value=0 savecurrent=false}
 C {gnd.sym} -860 440 0 0 {name=l6 lab=GND}
 C {lab_pin.sym} -860 370 1 0 {name=p10 sig_type=std_logic lab=IO_iovss}
-C {devices/code_shown.sym} -1010 -510 0 0 {name=MODEL only_toplevel=true
+C {devices/code_shown.sym} -1130 -530 0 0 {name=MODEL only_toplevel=true
 format="tcleval( @value )"
 value="
 .lib cornerMOSlv.lib mos_tt
+*.lib cornerMOSlv.lib mos_ss
 .lib cornerMOShv.lib mos_tt
 .lib cornerRES.lib res_typ
 .lib cornerCAP.lib cap_typ
@@ -265,7 +267,7 @@ size=80u
 shape=0
 padtype=0
 }
-C {devices/launcher.sym} 800 -500 0 0 {name=h5
+C {devices/launcher.sym} 890 -410 0 0 {name=h5
 descr="load waves Ctrl + left click" 
 tclcommand="xschem raw_read $netlist_dir/transient.raw tran"
 }
@@ -278,7 +280,7 @@ shape=0
 padtype=0
 }
 C {gnd.sym} -1020 100 0 0 {name=l7 lab=GND}
-C {lab_pin.sym} -1020 -120 1 0 {name=p11 sig_type=std_logic lab=inpad1}
+C {lab_pin.sym} -1020 -240 1 0 {name=p11 sig_type=std_logic lab=inpad1}
 C {lab_pin.sym} -590 -190 2 0 {name=p1 sig_type=std_logic lab=inpad1}
 C {sg13g2_pr/sub.sym} -530 440 0 0 {name=l8 lab=sub!}
 C {gnd.sym} -430 440 0 0 {name=l11 lab=GND}
@@ -301,18 +303,20 @@ m=1}
 C {code.sym} -160 -520 0 0 {name=TRANSIENT_TT only_toplevel=true
 value="
 .param temp=65 vdd=1.2 
-.param per=5n duty=2.5n trf=250p delay=2.5n
+.param per=4n duty=2n trf=20p delay=2n
 .param vin=1.2 vd=\{vdd\}
 
 
 .options method=gear reltol=1e-1 abstol=1e-1 vntol=1e-1
 .control
- tran 20p 140n
- * v(inpad1) v(in1) v(inpad2) v(in2)
- plot v(inpad1) v(outpad1) 
- *plot v(in1) v(in2) v(out1) v(out2)
+ set color0 = white
+ tran 20p 400n
+ *v(inpad1) v(in1) v(inpad2) v(in2)
+ plot v(inpad1) v(outpad1)  v(inpad2) v(outpad2) 
+ plot v(CP)
+ plot v(in1) v(in2) v(out1) v(out2)
  *plot v(out1) v(out2) v(outpad1) v(outpad2)
- *write transient.raw
+ write transient.raw
  wrdata tb_QDLL_TOP_TT.txt v(inpad1) v(inpad2) v(outpad1) v(outpad2)
 .endc
 "
@@ -335,7 +339,7 @@ C {vsource.sym} -920 410 0 0 {name=V7 value=0 savecurrent=false}
 C {gnd.sym} -920 440 0 0 {name=l9 lab=GND}
 C {lab_pin.sym} -920 370 1 0 {name=p14 sig_type=std_logic lab=VSS}
 C {gnd.sym} -930 100 0 0 {name=l1 lab=GND}
-C {lab_pin.sym} -930 -120 1 0 {name=p2 sig_type=std_logic lab=inpad2}
+C {lab_pin.sym} -930 -250 1 0 {name=p2 sig_type=std_logic lab=inpad2}
 C {vsource.sym} -930 20 0 0 {name=Vin1 value="PULSE(0 \{vin\} \{delay\} \{trf\} \{trf\} \{duty\} \{per\})"
 }
 C {res.sym} -930 -60 2 0 {name=R1
@@ -362,27 +366,27 @@ C {lab_pin.sym} 160 -130 0 0 {name=p20 sig_type=std_logic lab=out1}
 C {code.sym} 10 -520 0 0 {name=TRANSIENT_SS only_toplevel=true
 value="
 .param temp=125 vdd=1.08 
-.param per=11.1n duty=5.56n trf=300p delay=5n
+.param per=4n duty=2n trf=20p delay=2n
 .param vin=1.08 vd=\{vdd\}
 
 
 .options method=gear reltol=1e-1 abstol=1e-1 vntol=1e-1
 .control
- tran 20p 80n
+ tran 20p 120n
  * v(inpad1) v(in1) v(inpad2) v(in2)
- *plot v(inpad1) v(inpad2) v(outpad1) v(outpad2)
+ plot v(inpad1) v(inpad2) v(outpad1) v(outpad2)
  *plot v(in1) v(in2) v(out1) v(out2)
- plot v(out1) v(out2) v(outpad1) v(outpad2)
+ *plot v(out1) v(out2) v(outpad1) v(outpad2)
  write transient.raw
 
- wrdata tb_QDLL_TOP_SS.txt v(inpad1) v(inpad2) v(outpad1) v(outpad2)
+ *wrdata tb_QDLL_TOP_SS.txt v(inpad1) v(inpad2) v(outpad1) v(outpad2)
 .endc
 "
 spice_ignore=true}
 C {code.sym} 170 -520 0 0 {name=TRANSIENT_FF only_toplevel=true
 value="
 .param temp=0 vdd=1.32
-.param per=9.1n duty=4.56n trf=200p delay=5n
+.param per=4n duty=2n trf=20p delay=2n
 .param vin=1.32 vd=\{vdd\}
 
 
@@ -395,14 +399,14 @@ value="
  plot v(out1) v(out2) v(outpad1) v(outpad2)
  write transient.raw
 
- wrdata tb_QDLL_TOP_FF.txt v(inpad1) v(inpad2) v(outpad1) v(outpad2)
+ *wrdata tb_QDLL_TOP_FF.txt v(inpad1) v(inpad2) v(outpad1) v(outpad2)
 .endc
 "
 spice_ignore=true}
 C {code.sym} 330 -520 0 0 {name=PHASE_MEASR only_toplevel=true
 value="
 .param temp=65 vdd=1.2 
-.param per=10n duty=5n trf=250p delay=5n
+.param per=5n duty=2.5n  trf=250p delay=2.5n
 .param vin=1.2 vd=\{vdd\}
 
 
@@ -457,4 +461,5 @@ value="
 .endc
 "
 spice_ignore=true}
-C {lab_pin.sym} 50 140 0 0 {name=p21 sig_type=std_logic lab=CP}
+C {lab_pin.sym} 50 140 0 0 {name=p21 sig_type=std_logic lab=CP
+spice_ignore=short}
